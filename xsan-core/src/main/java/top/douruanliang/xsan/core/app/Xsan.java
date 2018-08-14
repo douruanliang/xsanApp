@@ -2,6 +2,7 @@ package top.douruanliang.xsan.core.app;
 
 import android.content.Context;
 
+import java.util.HashMap;
 import java.util.WeakHashMap;
 
 /**
@@ -15,8 +16,11 @@ public final class Xsan {
         return Configurator.getInstance();
     };
 
-    private static WeakHashMap<String,Object> getConfigurations(){
+    public static HashMap<String,Object> getConfigurations(){
         return Configurator.getInstance().getXsanConfigs();
+    }
 
+    public static Context getApplicationContext() {
+        return (Context) getConfigurations().get(ConfigType.APPLICATION_CONTEXT.name());
     }
 }
