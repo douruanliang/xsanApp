@@ -3,6 +3,7 @@ package top.douruanliang.xsan;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.Toast;
 
 import top.douruanliang.xsan.core.delegate.XsanDelegate;
 import top.douruanliang.xsan.core.net.RestClient;
@@ -23,17 +24,16 @@ public class ExampleDelegate extends XsanDelegate {
 
     @Override
     public void onBindView(@Nullable Bundle saveInstanceState, View view) {
-
+        testRestClient();
     }
 
     private void testRestClient() {
         RestClient.builder()
-                .url("")
-                .params("", "")
+                .url("http://hi.baidu.com/")
                 .success(new ISuccess() {
                     @Override
                     public void onSuccess(String response) {
-
+                        Toast.makeText(getContext(),response,Toast.LENGTH_LONG).show();
                     }
                 })
                 .failure(new IFailure() {
@@ -48,6 +48,7 @@ public class ExampleDelegate extends XsanDelegate {
 
                     }
                 })
-                .build();
+                .build()
+                .get();
     }
 }
