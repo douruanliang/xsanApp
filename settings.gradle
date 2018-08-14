@@ -1,0 +1,1 @@
+include ':example', ':xsan-annotations', ':xsan-complier', ':xsan-core', ':xsan-ec'
