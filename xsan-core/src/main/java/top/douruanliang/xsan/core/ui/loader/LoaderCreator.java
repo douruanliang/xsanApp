@@ -16,18 +16,15 @@ import java.util.WeakHashMap;
 public class LoaderCreator {
     private static final WeakHashMap<String, Indicator> LOADING_MAP = new WeakHashMap<>();
 
-    static AVLoadingIndicatorView create(String name, Context context){
+    static AVLoadingIndicatorView create(String type, Context context){
         final AVLoadingIndicatorView avLoadingIndicatorView = new AVLoadingIndicatorView(context);
-        if (LOADING_MAP.get(name) == null){
-            final Indicator indicator = getIndicator(name);
-            LOADING_MAP.put(name,indicator);
+        if (LOADING_MAP.get(type) == null){
+            final Indicator indicator = getIndicator(type);
+            LOADING_MAP.put(type,indicator);
         }
-        avLoadingIndicatorView.setIndicator(LOADING_MAP.get(name));
-
+        avLoadingIndicatorView.setIndicator(LOADING_MAP.get(type));
         return  avLoadingIndicatorView;
     }
-
-
 
     private static Indicator getIndicator(String name) {
         if (TextUtils.isEmpty(name)) {
@@ -35,16 +32,15 @@ public class LoaderCreator {
         }
         final StringBuilder drawbleClassName = new StringBuilder();
 
-        if (name.contains(".")) {
+        if (!name.contains(".")) {
             final String defaultPackageName = AVLoadingIndicatorView.class.getPackage().getName();
             drawbleClassName.append(defaultPackageName)
                     .append(".indicators")
                     .append(".");
         }
         drawbleClassName.append(name);
-
         try {
-            Class<?> drawbleClass = Class.forName(drawbleClassName.toString());
+            final Class<?> drawbleClass = Class.forName(drawbleClassName.toString());
             return (Indicator) drawbleClass.newInstance();
         } catch (Exception e) {
             e.printStackTrace();

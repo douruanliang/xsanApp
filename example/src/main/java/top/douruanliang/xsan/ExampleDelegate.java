@@ -30,10 +30,11 @@ public class ExampleDelegate extends XsanDelegate {
     private void testRestClient() {
         RestClient.builder()
                 .url("http://hi.baidu.com/")
+                .loader(getContext())
                 .success(new ISuccess() {
                     @Override
                     public void onSuccess(String response) {
-                        Toast.makeText(getContext(),response,Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getContext(),response,Toast.LENGTH_LONG).show();
                     }
                 })
                 .failure(new IFailure() {

@@ -1,5 +1,7 @@
 package top.douruanliang.xsan.core.net;
 
+import android.content.Context;
+
 import java.io.File;
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -10,6 +12,7 @@ import top.douruanliang.xsan.core.net.callback.IError;
 import top.douruanliang.xsan.core.net.callback.IFailure;
 import top.douruanliang.xsan.core.net.callback.IRequest;
 import top.douruanliang.xsan.core.net.callback.ISuccess;
+import top.douruanliang.xsan.core.ui.loader.LoaderStyle;
 
 /**
  * author: dourl
@@ -18,13 +21,17 @@ import top.douruanliang.xsan.core.net.callback.ISuccess;
  */
 public class RestClientBuilder {
 
-    private String mUrl;
+    private String mUrl = null;
     private static final WeakHashMap<String, Object> PARAMS = RestCreator.getParams();
-    private IRequest mIRequest;
-    private ISuccess mISuccess;
-    private IFailure mIFailure;
-    private IError mIError;
-    private RequestBody mBody;
+    private IRequest mIRequest = null;
+    private ISuccess mISuccess = null;
+    private IFailure mIFailure = null;
+    private IError mIError = null;
+    private RequestBody mBody = null;
+    private File mFile;
+    private LoaderStyle mLoaderStyle = null;
+    private Context mContext = null;
+
 
     RestClientBuilder() {
 
@@ -70,9 +77,27 @@ public class RestClientBuilder {
         this.mIError = error;
         return this;
     }
+    public final RestClientBuilder loader(Context  context,LoaderStyle style) {
+        this.mContext = context;
+        this.mLoaderStyle =style;
+        return this;
+    }
+    public final RestClientBuilder loader(Context  context) {
+        this.mContext = context;
+        this.mLoaderStyle =LoaderStyle.BallClipRotatePulseIndicator;
+        return this;
+    }
+    public final RestClientBuilder file(File  file) {
+        this.mFile = file;
+        return this;
+    }
 
+    public final RestClientBuilder file(String  file) {
+        this.mFile = new File(file);
+        return this;
+    }
 
-    public final RestClient build(){
-        return new RestClient(mUrl,PARAMS,mIRequest,mISuccess,mIFailure,mIError,mBody);
+    public final RestClient build() {
+        return new RestClient(mUrl, PARAMS, mIRequest, mISuccess, mIFailure, mIError, mBody,mFile,mContext,mLoaderStyle);
     }
 }

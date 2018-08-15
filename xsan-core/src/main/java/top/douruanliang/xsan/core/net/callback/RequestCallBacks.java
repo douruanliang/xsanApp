@@ -1,8 +1,13 @@
 package top.douruanliang.xsan.core.net.callback;
 
+
+import android.os.Handler;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import top.douruanliang.xsan.core.ui.loader.LoaderStyle;
+import top.douruanliang.xsan.core.ui.loader.XsanLoader;
 
 public class RequestCallBacks implements Callback<String> {
 
@@ -10,12 +15,16 @@ public class RequestCallBacks implements Callback<String> {
     private final ISuccess SUCCESS;
     private final IFailure FAILURE;
     private final IError ERROR;
+    private final LoaderStyle LOADERSTYLE;
+    private static  final Handler HANDLER = new Handler();
 
-    public RequestCallBacks(IRequest request, ISuccess success, IFailure failure, IError error) {
+
+    public RequestCallBacks(IRequest request, ISuccess success, IFailure failure, IError error,LoaderStyle style) {
         this.REQUEST = request;
         this.SUCCESS = success;
         this.FAILURE = failure;
         this.ERROR = error;
+        this.LOADERSTYLE =style;
     }
 
     @Override
@@ -31,6 +40,7 @@ public class RequestCallBacks implements Callback<String> {
                 ERROR.onError(response.code(), response.message());
             }
         }
+        stoploading();
     }
 
     @Override
@@ -41,6 +51,18 @@ public class RequestCallBacks implements Callback<String> {
 
         if (REQUEST != null) {
             REQUEST.onRequestEnd();
+        }
+        stoploading();
+    }
+
+    private void stoploading(){
+        if (LOADERSTYLE!=null){
+            HANDLER.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    XsanLoader.stopLoading();
+                }
+            },1000);
         }
     }
 }
