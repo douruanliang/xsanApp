@@ -5,9 +5,11 @@ package top.douruanliang.xsan.core.app;
  * created on: 2018/8/13 下午12:59
  * description:
  */
-public enum ConfigType {
+public enum ConfigKeys {
     API_HOST,
     APPLICATION_CONTEXT,
     CONFIG_READY,
-    ICON
+    ICON ,
+    LOADER_DELAYED,
+    INTERCEPTOR
 }
