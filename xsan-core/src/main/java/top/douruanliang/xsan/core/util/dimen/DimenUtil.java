@@ -1,4 +1,4 @@
-package top.douruanliang.xsan.core.util;
+package top.douruanliang.xsan.core.util.dimen;
 
 import android.content.res.Resources;
 import android.util.DisplayMetrics;

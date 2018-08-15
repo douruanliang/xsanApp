@@ -11,7 +11,7 @@ import com.wang.avi.AVLoadingIndicatorView;
 import java.util.ArrayList;
 
 import top.douruanliang.xsan.core.R;
-import top.douruanliang.xsan.core.util.DimenUtil;
+import top.douruanliang.xsan.core.util.dimen.DimenUtil;
 
 /**
  * author: dourl

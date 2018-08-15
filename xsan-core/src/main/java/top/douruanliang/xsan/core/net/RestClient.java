@@ -13,6 +13,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import top.douruanliang.xsan.core.app.Xsan;
+import top.douruanliang.xsan.core.download.DownloadHandler;
 import top.douruanliang.xsan.core.net.callback.IError;
 import top.douruanliang.xsan.core.net.callback.IFailure;
 import top.douruanliang.xsan.core.net.callback.IRequest;
@@ -30,7 +31,9 @@ public class RestClient {
 
     private final String URL;
     private static final WeakHashMap<String, Object> PARAMS = RestCreator.getParams();
-
+    private final String DOWNLOAD_DIR;
+    private final String EXTENSION;
+    private final String NAME;
     private final IRequest REQUEST;
     private final ISuccess SUCCESS;
     private final IFailure FAILURE;
@@ -40,19 +43,24 @@ public class RestClient {
     private final File FILE;
     private final Context CONTEXT;
 
-    public RestClient(String URL
-            , Map<String,Object> params
-            , IRequest request
-            , ISuccess success
-            , IFailure failure
-            , IError error
-            , RequestBody body
-                      ,File file
-            , Context context
-            , LoaderStyle loaderstyle
+    public RestClient(String URL,
+                      Map<String, Object> params,
+                      String downloadDir,
+                      String extension,
+                      String name,
+                      IRequest request,
+                      ISuccess success,
+                      IFailure failure,
+                      IError error,
+                      RequestBody body,
+                      File file,
+                      Context context, LoaderStyle loaderstyle
     ) {
         this.URL = URL;
         PARAMS.putAll(params);
+        this.DOWNLOAD_DIR = downloadDir;
+        this.EXTENSION = extension;
+        this.NAME = name;
         this.REQUEST = request;
         this.SUCCESS = success;
         this.FAILURE = failure;
@@ -88,8 +96,9 @@ public class RestClient {
             case POST:
                 call = service.post(URL, PARAMS);
                 break;
-            case POST_RAW:_RAW:
-                call = service.postRaw(URL,BODY);
+            case POST_RAW:
+                _RAW:
+                call = service.postRaw(URL, BODY);
                 break;
             case PUT:
                 call = service.put(URL, PARAMS);
@@ -124,7 +133,7 @@ public class RestClient {
     public final void post() {
         if (BODY == null) {
             request(HttpMethod.POST);
-        }else {
+        } else {
             if (!PARAMS.isEmpty()) {
                 throw new RuntimeException("params must be null!");
             }
@@ -133,10 +142,10 @@ public class RestClient {
     }
 
     public final void put() {
-        if (BODY ==null){
+        if (BODY == null) {
             request(HttpMethod.PUT);
-        }else {
-            if (!PARAMS.isEmpty()){
+        } else {
+            if (!PARAMS.isEmpty()) {
                 throw new RuntimeException("params must be null!");
             }
             request(HttpMethod.PUT_RAW);
@@ -147,7 +156,13 @@ public class RestClient {
         request(HttpMethod.DELETE);
     }
 
-    public final void upload(){
+    public final void upload() {
         request(HttpMethod.UPLOAD);
+    }
+
+    public final void download() {
+        new DownloadHandler(URL, REQUEST, DOWNLOAD_DIR, EXTENSION, NAME,
+                SUCCESS, FAILURE, ERROR)
+                .handleDownload();
     }
 }
