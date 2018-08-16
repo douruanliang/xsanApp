@@ -1,4 +1,4 @@
-package top.douruanliang.xsan.core.download;
+package top.douruanliang.xsan.core.net.download;
 
 import android.content.Intent;
 import android.net.Uri;
