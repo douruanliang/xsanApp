@@ -5,6 +5,7 @@ import android.app.Application;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 
 import top.douruanliang.xsan.core.app.Xsan;
+import top.douruanliang.xsan.core.net.interceptors.DebugInterceptor;
 import top.douruanliang.xsan.ec.icon.FontECModule;
 
 /**
@@ -21,7 +22,9 @@ public class XsanApp extends Application {
         Xsan.init(this)
                 .withIcon(new FontAwesomeModule())
                 .withIcon(new FontECModule())
-                .withApiHost("http://127.0.01")
+                .withApiHost("http://127.0.0.1")
+                .withLoaderDelayed(1000)
+                .withInterceptor(new DebugInterceptor("index",R.raw.test))
                 .configure();
     }
 }
