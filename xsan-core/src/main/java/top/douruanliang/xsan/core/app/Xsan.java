@@ -18,6 +18,7 @@ public final class Xsan {
     public static Configurator getConfigurator(){
         return Configurator.getInstance();
     }
+
      public static <T> T getConfiguration(Object key){
         return getConfigurator().getConfiguration(key);
      }

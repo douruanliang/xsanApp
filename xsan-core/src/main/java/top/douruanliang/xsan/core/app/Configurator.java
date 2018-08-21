@@ -52,9 +52,14 @@ public class Configurator {
         XSAN_CONFIGS.put(ConfigKeys.INTERCEPTOR,INTERCEPTORS);
         return this;
     }
-    public final Configurator withInterceptor(ArrayList<Interceptor> interceptors){
+    public final Configurator withInterceptors(ArrayList<Interceptor> interceptors){
         INTERCEPTORS.addAll(interceptors);
         XSAN_CONFIGS.put(ConfigKeys.INTERCEPTOR,INTERCEPTORS);
+        return this;
+    }
+
+    public final Configurator withLoaderDelayed(long delayed){
+        XSAN_CONFIGS.put(ConfigKeys.LOADER_DELAYED,delayed);
         return this;
     }
     //字体
