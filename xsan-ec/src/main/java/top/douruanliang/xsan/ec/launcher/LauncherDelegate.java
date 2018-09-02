@@ -11,6 +11,7 @@ import java.util.Timer;
 import butterknife.BindView;
 import butterknife.OnClick;
 import top.douruanliang.xsan.core.delegate.XsanDelegate;
+import top.douruanliang.xsan.core.util.storage.XsanPreference;
 import top.douruanliang.xsan.core.util.timer.BaseTimerTask;
 import top.douruanliang.xsan.core.util.timer.ITimerListener;
 import top.douruanliang.xsan.ec.R;
@@ -67,5 +68,9 @@ public class LauncherDelegate extends XsanDelegate implements ITimerListener {
                 }
             }
         });
+    }
+
+    private void checkIsShowScroll(){
+        //XsanPreference.getAppFlag()
     }
 }
