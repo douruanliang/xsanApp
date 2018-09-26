@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import top.douruanliang.xsan.core.activity.ProxyActivity;
 import top.douruanliang.xsan.core.delegate.XsanDelegate;
 import top.douruanliang.xsan.ec.launcher.LauncherDelegate;
+import top.douruanliang.xsan.ec.sign.SignInDelegate;
 import top.douruanliang.xsan.ec.sign.SignUpDelegate;
 
 /**
@@ -28,7 +29,7 @@ public class ExampleActivity  extends ProxyActivity{
 
     @Override
     public XsanDelegate setRootDelegate() {
-        return new SignUpDelegate();
+        return new SignInDelegate();
     }
 
 

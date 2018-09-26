@@ -1,7 +1,6 @@
 package top.douruanliang.xsan.ec.sign;
 
 import android.os.Bundle;
-import android.os.PatternMatcher;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.AppCompatButton;
@@ -17,8 +16,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import top.douruanliang.xsan.core.delegate.XsanDelegate;
-import top.douruanliang.xsan.core.net.RestClient;
-import top.douruanliang.xsan.core.net.callback.ISuccess;
 import top.douruanliang.xsan.ec.R;
 import top.douruanliang.xsan.ec.R2;
 
@@ -57,7 +54,10 @@ public class SignUpDelegate extends XsanDelegate {
             Toast.makeText(getContext(),"success",Toast.LENGTH_LONG).show();
         }
     }
-
+    @OnClick(R2.id.tv_link_sign_in)
+    void onClickLink() {
+        start(new SignInDelegate());
+    }
     @Override
     public Object setLayout() {
         return R.layout.delegate_sign_up;
