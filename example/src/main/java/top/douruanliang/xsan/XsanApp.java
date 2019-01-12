@@ -2,10 +2,12 @@ package top.douruanliang.xsan;
 
 import android.app.Application;
 
+import com.facebook.stetho.Stetho;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 
 import top.douruanliang.xsan.core.app.Xsan;
 import top.douruanliang.xsan.core.net.interceptors.DebugInterceptor;
+import top.douruanliang.xsan.ec.database.DatabaseManager;
 import top.douruanliang.xsan.ec.icon.FontECModule;
 
 /**
@@ -18,7 +20,7 @@ public class XsanApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        //配置初始化
         Xsan.init(this)
                 .withIcon(new FontAwesomeModule())
                 .withIcon(new FontECModule())
@@ -26,5 +28,16 @@ public class XsanApp extends Application {
                 .withLoaderDelayed(1000)
                 .withInterceptor(new DebugInterceptor("index",R.raw.test))
                 .configure();
+        //测试
+        initStetho();
+        //数据库初始化
+        DatabaseManager.getInstance().init(this);
+    }
+
+    private void initStetho(){
+        Stetho.initialize(Stetho.newInitializerBuilder(this)
+        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
+        .build());
     }
 }

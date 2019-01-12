@@ -1,10 +1,12 @@
 package top.douruanliang.xsan.ec.sign;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import top.douruanliang.xsan.core.delegate.XsanDelegate;
+import top.douruanliang.xsan.core.net.RestClient;
+import top.douruanliang.xsan.core.net.callback.IError;
+import top.douruanliang.xsan.core.net.callback.IFailure;
+import top.douruanliang.xsan.core.net.callback.ISuccess;
 import top.douruanliang.xsan.ec.R;
 import top.douruanliang.xsan.ec.R2;
 
@@ -30,34 +36,65 @@ public class SignUpDelegate extends XsanDelegate {
     TextInputEditText editSignUpPassword;
     @BindView(R2.id.edit_sign_up_re_password)
     TextInputEditText editSignUpRePassword;
+
     @BindView(R2.id.btn_sign_up)
     AppCompatButton btnSignUp;
     @BindView(R2.id.tv_link_sign_in)
     AppCompatTextView tvLinkSignIn;
     Unbinder unbinder;
 
+    private ISignListener mISignListener;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof ISignListener){
+            mISignListener = (ISignListener) activity;
+        }
+
+    }
+
     @OnClick(R2.id.btn_sign_up)
-    void onClickSignUp(){
-        if (checkForm()){
-     /*       RestClient.builder()
-                    .url("sign_up")
-                    .params("","")
+    void onClickSignUp() {
+        if (checkForm()) {
+            RestClient.builder()
+                    .url("http://192.168.1.12/xsan/sign_up")
+                    .params("name", editSignUpName.getText().toString())
+                    .params("email", editSignUpEmail.getText().toString())
+                    .params("phone", editSignUpPhone.getText().toString())
+                    .params("password", editSignUpPassword.getText().toString())
+
                     .success(new ISuccess() {
                         @Override
                         public void onSuccess(String response) {
+                            SignHandler.onSignUp(response,mISignListener);
+                            Log.e("dou", "ok");
+                        }
+                    })
+                    .failure(new IFailure() {
+                        @Override
+                        public void onFailure() {
 
                         }
                     })
+                    .error(new IError() {
+                        @Override
+                        public void onError(int code, String msg) {
+                            Log.e("dou", msg);
+                        }
+                    })
                     .build()
-                    .post();*/
+                    .post();
 
-            Toast.makeText(getContext(),"success",Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "success", Toast.LENGTH_LONG).show();
         }
     }
+
     @OnClick(R2.id.tv_link_sign_in)
     void onClickLink() {
         start(new SignInDelegate());
     }
+
     @Override
     public Object setLayout() {
         return R.layout.delegate_sign_up;
@@ -82,7 +119,7 @@ public class SignUpDelegate extends XsanDelegate {
         unbinder.unbind();
     }
 
-    private boolean checkForm(){
+    private boolean checkForm() {
         final String name = editSignUpName.getText().toString();
         final String email = editSignUpEmail.getText().toString();
         final String phone = editSignUpPhone.getText().toString();
@@ -91,41 +128,41 @@ public class SignUpDelegate extends XsanDelegate {
 
         boolean isPass = true;
 
-        if (name.isEmpty()){
+        if (name.isEmpty()) {
             editSignUpName.setError("请输入姓名");
             isPass = false;
-        }else{
+        } else {
             editSignUpName.setError(null);
         }
 
-        if (email.isEmpty() || Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        if (email.isEmpty()) {
             editSignUpEmail.setError("错误的邮箱各格式");
             isPass = false;
-        }else{
+        } else {
             editSignUpEmail.setError(null);
         }
 
-        if (phone.isEmpty()|| phone.length()!=11){
+        if (phone.isEmpty()) {
             editSignUpPhone.setError("手机号码错误");
             isPass = false;
-        }else{
+        } else {
             editSignUpPhone.setError(null);
         }
 
-        if (password.isEmpty()|| password.length()<6){
+        if (password.isEmpty() || password.length() < 6) {
             editSignUpPassword.setError("请填写至少6位📖密码");
             isPass = false;
-        }else{
+        } else {
             editSignUpPassword.setError(null);
         }
 
-        if (rePassword.isEmpty()|| rePassword.length()<6 || !(rePassword.equals(password))){
+       /* if (rePassword.isEmpty() || rePassword.length() < 6 || !(rePassword.equals(password))) {
             editSignUpRePassword.setError("密码验证错误");
             isPass = false;
-        }else{
+        } else {
             editSignUpRePassword.setError(null);
-        }
+        }*/
 
-        return  isPass;
+        return isPass;
     }
 }

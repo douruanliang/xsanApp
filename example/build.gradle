@@ -27,4 +27,7 @@ dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
     api project(':xsan-ec')
     api project(':xsan-complier')
+    implementation 'com.facebook.stetho:stetho:1.5.0'
+    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+    implementation project(':xsan-annotations')
 }
