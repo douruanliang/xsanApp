@@ -27,6 +27,8 @@ public class XsanApp extends Application {
                 .withApiHost("http://127.0.0.1")
                 .withLoaderDelayed(1000)
                 .withInterceptor(new DebugInterceptor("index",R.raw.test))
+                .withWechatAppId("wx1fd21c7f4bf78aba")
+                .withWechatAppSecret("0c0cdea715f70932abc2921febc589e2")
                 .configure();
         //测试
         initStetho();

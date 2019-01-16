@@ -6,9 +6,11 @@ import android.support.v7.app.ActionBar;
 import android.widget.Toast;
 
 import top.douruanliang.xsan.core.activity.ProxyActivity;
+import top.douruanliang.xsan.core.app.Xsan;
 import top.douruanliang.xsan.core.delegate.XsanDelegate;
 import top.douruanliang.xsan.core.ui.launcher.ILauncherListener;
 import top.douruanliang.xsan.core.ui.launcher.OnLauncherFinishTag;
+import top.douruanliang.xsan.ec.main.XsanBottomDelegate;
 import top.douruanliang.xsan.ec.sign.ISignListener;
 import top.douruanliang.xsan.ec.sign.SignInDelegate;
 import top.douruanliang.xsan.ec.sign.SignUpDelegate;
@@ -28,11 +30,12 @@ public class ExampleActivity extends ProxyActivity implements ISignListener, ILa
 
         if (actionBar != null)
             actionBar.hide();
+        Xsan.getConfigurator().withActivity(this);
     }
 
     @Override
     public XsanDelegate setRootDelegate() {
-        return new SignUpDelegate();
+        return new SignInDelegate();
     }
 
 
@@ -51,6 +54,7 @@ public class ExampleActivity extends ProxyActivity implements ISignListener, ILa
         switch (tag) {
             case SIGHED:
                 Toast.makeText(this, "启动结束已登录", Toast.LENGTH_LONG);
+               startWithPop(new XsanBottomDelegate());
                 break;
             case NOT_SIGNED:
                 Toast.makeText(this, "启动结束未登录", Toast.LENGTH_LONG);
