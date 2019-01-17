@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
-        <android.support.v7.widget.Toolbar
+        <android.support.v7.widget.Toolba
             android:id="@+id/tb_index"
             android:layout_width="match_parent"
             android:layout_height="80dp"
@@ -59,6 +59,6 @@
                     android:textColor="@android:color/white"
                     android:textSize="25dp"/>
             </LinearLayout>
-        </android.support.v7.widget.Toolbar>
+        </android.support.v7.widget.Toolba>
     </android.support.v4.widget.SwipeRefreshLayout>
 </android.support.design.widget.CoordinatorLayout>
