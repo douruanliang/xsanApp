@@ -12,6 +12,8 @@ import butterknife.OnClick;
 import top.douruanliang.xsan.core.delegate.XsanDelegate;
 import top.douruanliang.xsan.core.net.RestClient;
 import top.douruanliang.xsan.core.net.callback.ISuccess;
+import top.douruanliang.xsan.core.wechat.XsanWeChat;
+import top.douruanliang.xsan.core.wechat.callBacks.IWeChatSignInCallback;
 import top.douruanliang.xsan.ec.R;
 import top.douruanliang.xsan.ec.R2;
 
@@ -37,6 +39,7 @@ public class SignInDelegate extends XsanDelegate implements ISignListener {
     void onClickSignIn() {
         if (checkForm()) {
             RestClient.builder()
+                    .url("http://192.168.1.12/xsan/sign_in")
                     .params("email",mEmail.getText().toString())
                     .params("password",mPassword.getText().toString())
                     .success(new ISuccess() {
@@ -50,9 +53,12 @@ public class SignInDelegate extends XsanDelegate implements ISignListener {
 
     @OnClick(R2.id.icon_sign_in_wechat)
     void onClickWechat() {
-        if (checkForm()) {
+        XsanWeChat.getInstance().onSignSuccess(new IWeChatSignInCallback() {
+            @Override
+            public void onSignInSuccess(String userInfo) {
 
-        }
+            }
+        }).signIn();
     }
 
     @OnClick(R2.id.tv_link_sign_up)

@@ -1,5 +1,7 @@
 package top.douruanliang.xsan.core.app;
 
+import android.app.Activity;
+
 import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;
 
@@ -75,6 +77,22 @@ public class Configurator {
 
     public final Configurator withIcon(IconFontDescriptor descriptor) {
         ICONS.add(descriptor);
+        return this;
+    }
+
+
+    public final Configurator withWechatAppId(String appId) {
+        XSAN_CONFIGS.put(ConfigKeys.WE_CHAT_APP_ID,appId);
+        return this;
+    }
+
+    public final Configurator withWechatAppSecret(String appSecret) {
+        XSAN_CONFIGS.put(ConfigKeys.WE_CHAT_APP_SECRET,appSecret);
+        return this;
+    }
+
+    public final Configurator withActivity(Activity activity) {
+        XSAN_CONFIGS.put(ConfigKeys.ACTIVITY,activity);
         return this;
     }
 

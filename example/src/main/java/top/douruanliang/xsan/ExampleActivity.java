@@ -10,6 +10,7 @@ import top.douruanliang.xsan.core.app.Xsan;
 import top.douruanliang.xsan.core.delegate.XsanDelegate;
 import top.douruanliang.xsan.core.ui.launcher.ILauncherListener;
 import top.douruanliang.xsan.core.ui.launcher.OnLauncherFinishTag;
+import top.douruanliang.xsan.ec.launcher.LauncherDelegate;
 import top.douruanliang.xsan.ec.main.XsanBottomDelegate;
 import top.douruanliang.xsan.ec.sign.ISignListener;
 import top.douruanliang.xsan.ec.sign.SignInDelegate;
@@ -35,7 +36,7 @@ public class ExampleActivity extends ProxyActivity implements ISignListener, ILa
 
     @Override
     public XsanDelegate setRootDelegate() {
-        return new SignInDelegate();
+        return new LauncherDelegate();
     }
 
 
