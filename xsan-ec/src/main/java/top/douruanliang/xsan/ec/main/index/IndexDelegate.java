@@ -6,16 +6,13 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.joanzapata.iconify.widget.IconTextView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import top.douruanliang.xsan.core.delegate.bottom.BottomItemDelegete;
+import top.douruanliang.xsan.core.ui.refresh.RefreshHandler;
 import top.douruanliang.xsan.ec.R;
 import top.douruanliang.xsan.ec.R2;
 
@@ -32,7 +29,22 @@ public class IndexDelegate extends BottomItemDelegete {
     Toolbar tbIndex;
     @BindView(R2.id.srl_index)
     SwipeRefreshLayout srlIndex;
-    Unbinder unbinder;
+
+    private RefreshHandler mRefreshHandler = null;
+    private void initRefreshLayout() {
+        srlIndex.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+        srlIndex.setProgressViewOffset(true,120,300);
+    }
+
+
+    @Override
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
+        initRefreshLayout();
+    }
 
     @Override
     public Object setLayout() {
@@ -41,19 +53,14 @@ public class IndexDelegate extends BottomItemDelegete {
 
     @Override
     public void onBindView(@Nullable Bundle saveInstanceState, View view) {
-
+       mRefreshHandler =new RefreshHandler(srlIndex);
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
-        return rootView;
-    }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+
+
     }
 }
