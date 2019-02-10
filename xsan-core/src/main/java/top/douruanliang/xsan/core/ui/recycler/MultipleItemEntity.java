@@ -14,8 +14,12 @@ public class MultipleItemEntity implements MultiItemEntity {
             new SoftReference<LinkedHashMap<Object, Object>>(MULTIPLE_FIFLDS,ITEM_QUENE);
 
 
-    public MultipleItemEntity(LinkedHashMap<Object,Object> fields) {
+    MultipleItemEntity(LinkedHashMap<Object,Object> fields) {
         FIELDS_REFERENCE.get().putAll(fields);
+    }
+
+    public static MultipleEntityBuilder builder(){
+        return new MultipleEntityBuilder();
     }
 
     @Override
@@ -23,6 +27,7 @@ public class MultipleItemEntity implements MultiItemEntity {
         return (int) FIELDS_REFERENCE.get().get(MultipleFields.ITEM_TYPE);
     }
 
+    @SuppressWarnings("unchecked")
     public final <T> T getField(Object key){
         return (T) FIELDS_REFERENCE.get().get(key);
 
